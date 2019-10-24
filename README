@@ -1,1 +1,5 @@
 INIT
+git status
+git add -A
+git commit -m '使用git'
+git push
