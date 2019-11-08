@@ -108,7 +108,7 @@ export default {
         userName: this.userName
       };
       ajax({
-        url: "/upload/deleteArticles",
+        url: "/upload/deleteArticle",
         method: "post",
         data: qs.stringify(data),
         //删除自己发表的文章要发token
