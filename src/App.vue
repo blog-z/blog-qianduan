@@ -9,10 +9,11 @@
       <h4 class="title" id="cover" @click="tocover">发现</h4>
 
       <input type="text" class="search" />
+      <a href="javascript:;" class="searchbtn"><i class="iconfont icon-RectangleCopy"></i></a>
+
       <div v-if="userName" class="log-reg-wap">
         <span class="comeback" v-if="this.$route.path == '/pcenter'">{{userName}} 个人中心</span>
         <span @click="topCenter" class="comeback" v-else>欢迎回来: {{userName}}</span>
-        
       </div>
       <div class="log-reg-wap" v-else>
         <div class="regist">
@@ -45,8 +46,8 @@ export default {
       // this.$router.replace('/articledetail');
       this.$router.replace("/homepage");
     },
-    topCenter(){
-      console.log(this.$route.path)
+    topCenter() {
+      console.log(this.$route.path);
       this.$router.replace("/pcenter");
     }
   },
@@ -108,14 +109,33 @@ export default {
   margin-top: 10px;
   margin-left: 30px;
   padding-left: 10px;
+  vertical-align: top;
 }
-.log-reg-wap{
+.searchbtn {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  margin-top: 10px;
+  border-radius: 15px;
+  background-color: #fff;
+  font-weight: bolder;
+  text-align: center;
+  line-height: 30px;
+  transition: all .5s;
+}
+.searchbtn:hover{
+  width: 50px;
+  
+
+}
+
+.log-reg-wap {
   float: right;
-  line-height:40px;
+  line-height: 40px;
   font-size: 12px;
-  color: #666C7A;
+  color: #666c7a;
 }
-.comeback{
+.comeback {
   cursor: pointer;
   margin-right: 20px;
 }

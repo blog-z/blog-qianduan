@@ -89,9 +89,9 @@ export default {
     changearticle(index) {
       // 获取到article的id，
       let changeobj = {
-        articleId: this.localData[index].articleId,
-        articleTitle: this.localData[index].articleTitle,
-        articleContent: this.localData[index].articleContent
+        articleId: this.localData[index].article_id,
+        articleTitle: this.localData[index].article_title,
+        articleContent: this.localData[index].article_content
       };
 
       //将文章的title和content传入到跳转的路由，跳转的路由保存到data中，渲染到页面上
@@ -102,7 +102,7 @@ export default {
     },
     deletearticle(index) {
       //获取文章的id，发送请求，重修定位到这个路由
-      let articleId = this.localData[index].articleId;
+      let articleId = this.localData[index].article_id;
       let data = {
         articleId,
         userName: this.userName

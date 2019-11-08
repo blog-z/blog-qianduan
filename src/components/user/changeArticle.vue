@@ -49,7 +49,7 @@ export default {
       console.log(this.value);
     },
     bchange() {
-      //提交到服务器       http://localhost:8080/upload/uploadArticle
+      //提交到服务器       http://localhost:8080/upload/updateArticle
       let data = {
         articleId: this.articleId,
         userName: this.userName,
