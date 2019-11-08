@@ -22,8 +22,8 @@
           <i class="iconfont icon-gengxinshijian" title="更新时间"></i>
           {{art.update_time}}
         </span>
-        <el-button class="change-art">修改</el-button>
-        <el-button class="delete-art">删除</el-button>
+        <el-button class="change-art" @click="changearticle(index)">修改</el-button>
+        <el-button class="delete-art" @click="deletearticle(index)">删除</el-button>
       </div>
       <div class="underline"></div>
     </div>
@@ -41,7 +41,7 @@ export default {
     return {
       //这里存放请求回来的数据
       localData: [],
-      clickIndex:'',
+      clickIndex: ""
     };
   },
   computed: {
@@ -75,13 +75,54 @@ export default {
             //获取请求的数据，将数据传给子组件articleDetail
             let query = res.data.result;
             this.$router.push({
-              path:'/articledetail',
-              query:query
-            })
+              path: "/articledetail",
+              query: query
+            });
           }
         })
         .catch(err => {
           alert("个人中心文章详情页请求失败");
+          console.log(err);
+        });
+    },
+    //跳转到修改文章页面
+    changearticle(index) {
+      // 获取到article的id，
+      let changeobj = {
+        articleId: this.localData[index].articleId,
+        articleTitle: this.localData[index].articleTitle,
+        articleContent: this.localData[index].articleContent
+      };
+
+      //将文章的title和content传入到跳转的路由，跳转的路由保存到data中，渲染到页面上
+      this.$router.push({
+        path: "/changearticle",
+        query: changeobj
+      });
+    },
+    deletearticle(index) {
+      //获取文章的id，发送请求，重修定位到这个路由
+      let articleId = this.localData[index].articleId;
+      let data = {
+        articleId,
+        userName: this.userName
+      };
+      ajax({
+        url: "/upload/deleteArticles",
+        method: "post",
+        data: qs.stringify(data),
+        //删除自己发表的文章要发token
+        headers: { accessToken: this.token }
+      })
+        .then(res => {
+          if (res.status == 0) {
+            //删除成功，刷新页面
+            this.$message('删除成功')
+            this.$router.replace('/pcenter')
+          }
+        })
+        .catch(err => {
+          alert("删除文章失败");
           console.log(err);
         });
     }

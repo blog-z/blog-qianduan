@@ -12,6 +12,8 @@ import articledetail from "../components/user/articleDetail.vue"
 import pcenter from "../components/user/pcenter.vue"
 //发表文章路由
 import writearticle from '../components/user/writeArticle.vue'
+//修改文章路由
+import changearticle from '../components/user/changeArticle.vue'
 
 Vue.use(Router)
 
@@ -56,6 +58,12 @@ export default new Router({
       name: 'writearticle',
       component: writearticle
     },
+    {
+      path: '/changearticle',
+      name: 'changearticle',
+      component: changearticle
+    },
+    
 
   ]
 })
