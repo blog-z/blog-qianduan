@@ -8,8 +8,8 @@
       <h4 class="title" id="index" @click="tohomepage">首页</h4>
       <h4 class="title" id="cover" @click="tocover">发现</h4>
 
-      <input type="text" class="search" />
-      <a href="javascript:;" class="searchbtn"><i class="iconfont icon-RectangleCopy"></i></a>
+      <input type="text" class="search" v-model="searchtext" />
+      <a href="javascript:;" class="searchbtn" @click="tosearch"><i class="iconfont icon-RectangleCopy"></i></a>
 
       <div v-if="userName" class="log-reg-wap">
         <span class="comeback" v-if="this.$route.path == '/pcenter'">{{userName}} 个人中心</span>
@@ -38,7 +38,13 @@
 <script>
 export default {
   name: "App",
-  methods: {
+  data() {
+    return {
+      searchtext:''
+    }
+  },
+   methods: {
+
     tohomepage() {
       this.$router.replace("/homepage");
     },
@@ -49,7 +55,12 @@ export default {
     topCenter() {
       console.log(this.$route.path);
       this.$router.replace("/pcenter");
+    },
+    //点击搜索
+    tosearch(){
+
     }
+
   },
   computed: {
     userName() {
@@ -121,7 +132,7 @@ export default {
   font-weight: bolder;
   text-align: center;
   line-height: 30px;
-  transition: all .5s;
+  transition: all .3s;
 }
 .searchbtn:hover{
   width: 50px;
