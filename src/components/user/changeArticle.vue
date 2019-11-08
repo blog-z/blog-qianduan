@@ -18,7 +18,6 @@ export default {
     return {
       isClear: false,
       value: "", //内容
-      title: ""
     };
   },
   computed: {
