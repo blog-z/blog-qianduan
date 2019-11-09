@@ -53,7 +53,7 @@ export default {
       this.$router.replace("/homepage");
     },
     topCenter() {
-      console.log(this.$route.path);
+      // console.log(this.$route.path);
       this.$router.replace("/pcenter");
     },
     //点击搜索
@@ -121,6 +121,10 @@ export default {
   margin-left: 30px;
   padding-left: 10px;
   vertical-align: top;
+  padding-left: 15px; 
+  padding-right: 15px;
+  font-size: 12px;
+  color: #666c7a;
 }
 .searchbtn {
   display: inline-block;
