@@ -9,7 +9,9 @@
       <h4 class="title" id="cover" @click="tocover">发现</h4>
 
       <input type="text" class="search" v-model="searchtext" />
-      <a href="javascript:;" class="searchbtn" @click="tosearch"><i class="iconfont icon-RectangleCopy"></i></a>
+      <a href="javascript:;" class="searchbtn" @click="tosearch">
+        <i class="iconfont icon-RectangleCopy"></i>
+      </a>
 
       <div v-if="userName" class="log-reg-wap">
         <span class="comeback" v-if="this.$route.path == '/pcenter'">{{userName}} 个人中心</span>
@@ -29,22 +31,27 @@
 
     <!-- 头部结束 -->
 
-    <keep-alive exclude="detailData,login,pcenter,homepage">
-      <router-view />
-    </keep-alive>
+    <router-view />
   </div>
 </template>
 
 <script>
+//准备发送请求
+import {ajax} from './network/request'
+import qs from 'qs'
+
 export default {
   name: "App",
   data() {
     return {
-      searchtext:''
-    }
-  },
-   methods: {
+      //用户输入搜索的文本
+      searchtext: "",
+      //初始化pageNum
+      pageNum: 1
 
+    };
+  },
+  methods: {
     tohomepage() {
       this.$router.replace("/homepage");
     },
@@ -57,15 +64,46 @@ export default {
       this.$router.replace("/pcenter");
     },
     //点击搜索
-    tosearch(){
+    tosearch() {
+      //发送请求，得到数据将数据传给搜索页面，搜索页面可以点击
+      //初始化data，准备发送搜索的ajax。
+      
+      let data = {
+        userName:this.userName,
+        userInputText: this.searchtext,
+        pageNum: this.pageNum
+      }
+       ajax({
+        url: "/upload/deleteArticle",
+        method: "post",
+        data: qs.stringify(data),
+        //删除自己发表的文章要发token
+        headers: { accessToken: this.token }
+      })
+        .then(res => {
+          if (res.status == 0) {
+            //搜索成功，跳转路由到searchArticle，将数据传输给这个路由
+            this.$router.replace({
+              path:'searchArticle',
+              query:res.data
+            })
+            
 
+          }
+        })
+        .catch(err => {
+          alert("搜索失败");
+          // console.log(err);
+        });
     }
-
   },
   computed: {
     userName() {
       return this.$store.state.userName;
       // return "zhangsan"
+    },
+    accessToken(){
+      return this.$store.state.token;
     }
   }
 };
@@ -121,7 +159,7 @@ export default {
   margin-left: 30px;
   padding-left: 10px;
   vertical-align: top;
-  padding-left: 15px; 
+  padding-left: 15px;
   padding-right: 15px;
   font-size: 12px;
   color: #666c7a;
@@ -136,12 +174,10 @@ export default {
   font-weight: bolder;
   text-align: center;
   line-height: 30px;
-  transition: all .3s;
+  transition: all 0.3s;
 }
-.searchbtn:hover{
+.searchbtn:hover {
   width: 50px;
-  
-
 }
 
 .log-reg-wap {

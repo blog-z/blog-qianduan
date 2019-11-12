@@ -14,6 +14,8 @@ import pcenter from "../components/user/pcenter.vue"
 import writearticle from '../components/user/writeArticle.vue'
 //修改文章路由
 import changearticle from '../components/user/changeArticle.vue'
+//搜索的路由
+import searchArticle from '../components/user/searchArticle'
 
 Vue.use(Router)
 
@@ -62,6 +64,12 @@ export default new Router({
       path: '/changearticle',
       name: 'changearticle',
       component: changearticle
+    },
+    // 搜索的路由
+    {
+      path: '/searchArticle',
+      name: 'searchArticle',
+      component: searchArticle
     },
     
 

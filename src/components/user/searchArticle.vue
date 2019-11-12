@@ -22,13 +22,9 @@
           <i class="iconfont icon-gengxinshijian" title="更新时间"></i>
           {{art.update_time}}
         </span>
-        <el-button class="change-art" @click="changearticle(index)">修改</el-button>
-        <el-button class="delete-art" @click="deletearticle(index)">删除</el-button>
       </div>
       <div class="underline"></div>
     </div>
-    <!-- 发表文章的按钮 -->
-    <el-button @click="towrite" class="write">发表文章</el-button>
   </div>
 </template>
 <script>
@@ -36,7 +32,7 @@
 import { ajax } from "../../network/request";
 import qs from "qs";
 export default {
-  name: "pcenter",
+  name: "searchArticle",
   data() {
     return {
       //这里存放请求回来的数据
@@ -53,9 +49,6 @@ export default {
     }
   },
   methods: {
-    towrite() {
-      this.$router.replace("/writearticle");
-    },
     //判断点击的那一篇文章，先获取index通过localdata的index找到这篇文章
     getArticle(index) {
       this.clickIndex = index;
@@ -68,7 +61,7 @@ export default {
         method: "post",
         data: qs.stringify(data),
         //点击详细文章需不需要发token
-        headers: { token: this.token }
+        headers: { accessToken: this.token }
       })
         .then(res => {
           if (res.status == 0) {
@@ -84,76 +77,12 @@ export default {
           alert("个人中心文章详情页请求失败");
           console.log(err);
         });
-    },
-    //跳转到修改文章页面
-    changearticle(index) {
-      // 获取到article的id，
-      let changeobj = {
-        articleId: this.localData[index].article_id,
-        articleTitle: this.localData[index].article_title,
-        articleContent: this.localData[index].article_content
-      };
-
-      //将文章的title和content传入到跳转的路由，跳转的路由保存到data中，渲染到页面上
-      this.$router.push({
-        path: "/changearticle",
-        query: changeobj
-      });
-    },
-    deletearticle(index) {
-      //获取文章的id，发送请求，重修定位到这个路由
-      let articleId = this.localData[index].article_id;
-      let data = {
-        articleId,
-        userName: this.userName
-      };
-      ajax({
-        url: "/upload/deleteArticle",
-        method: "post",
-        data: qs.stringify(data),
-        //删除自己发表的文章要发token
-        headers: { accessToken: this.token }
-      })
-        .then(res => {
-          if (res.status == 0) {
-            //删除成功，刷新页面
-            this.localData.splice(index,1,'');
-            //删除服务器的数据，同时删除本地数据
-            this.$message('删除成功')
-
-            this.$router.replace('/pcenter')
-          }
-        })
-        .catch(err => {
-          alert("删除文章失败");
-          console.log(err);
-        });
     }
   },
 
   mounted() {
-    // http://localhost:8080/upload/getOwnArticles     请求回来看已经发表的文章
-    let data = {
-      userName: this.userName
-    };
-    ajax({
-      url: "/upload/getOwnArticles",
-      method: "post",
-      data: qs.stringify(data),
-      //请求回来自己发表的文章需不需要发token
-      headers: { accessToken: this.token }
-    })
-      .then(res => {
-        if (res.status == 0) {
-          //将请求的数据保存到本地
-          this.localData = res.data;
-          // 点击修改要用到点击的是那篇文章，获取原来的文章的内容，把原来的文章渲染到页面上
-        }
-      })
-      .catch(err => {
-        alert("个人中心数据请求失败");
-        console.log(err);
-      });
+    // 将首页传过来的数据保存的本地并且渲染一下。
+    this.localData = this.$route.query.list;
   }
 };
 </script>
