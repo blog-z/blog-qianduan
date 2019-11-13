@@ -66,7 +66,7 @@ export default {
     //点击搜索
     tosearch() {
       //将搜索文本添加到vuex中
-      this.$store.commit('inputChange',this.userInputText)
+      this.$store.commit('inputChange',this.searchtext)
       //发送请求，得到数据将数据传给搜索页面，搜索页面可以点击
       //初始化data，准备发送搜索的ajax。
       //先跳转到首页，在跳转到搜索页面

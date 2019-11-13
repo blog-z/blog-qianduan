@@ -48,8 +48,7 @@ export default {
       //这里存放请求回来的数据
       localData: [],
       clickIndex: "",
-      //用户输入的文本
-      searchtext:'',
+      
       // 页码相关的数据
       totalPage: null,
       curentPage: null,
@@ -79,7 +78,7 @@ export default {
         url: "/upload/getArticle",
         method: "post",
         data: qs.stringify(data),
-        //点击详细文章需不需要发token
+        //点击详细文章需要发token
         headers: { accessToken: this.token }
       })
         .then(res => {
@@ -148,6 +147,7 @@ export default {
   margin-left: 120px;
   margin-top: 30px;
   width: 730px;
+
   position: relative;
 }
 .art-content {
