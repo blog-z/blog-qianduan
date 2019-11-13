@@ -44,6 +44,9 @@ export default {
       clickIndex: ""
     };
   },
+  watch(){
+    
+  },
   computed: {
     userName() {
       return this.$store.state.userName;

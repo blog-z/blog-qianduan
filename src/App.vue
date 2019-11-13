@@ -67,6 +67,8 @@ export default {
     tosearch() {
       //发送请求，得到数据将数据传给搜索页面，搜索页面可以点击
       //初始化data，准备发送搜索的ajax。
+      //先跳转到首页，在跳转到搜索页面
+      this.$router.replace('/homepage')
       
       let data = {
         userName:this.userName,
@@ -77,7 +79,7 @@ export default {
         url: "/upload/searchArticle",
         method: "post",
         data: qs.stringify(data),
-        //删除自己发表的文章要发token
+        //搜索发表的文章要发token
         headers: { accessToken: this.token }
       })
         .then(res => {
