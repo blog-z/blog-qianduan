@@ -26,7 +26,7 @@
       <div class="underline"></div>
     </div>
 
-    <ul class="page clearfix">
+    <!-- <ul class="page clearfix">
       <li v-for="(item, index) in totalPage" :key="index"
        class="pageitem" :class="{curent:curentPage==index+1}"
        @click="toNumpage(index)">
@@ -34,6 +34,14 @@
       </li>
       
 
+    </ul> -->
+    <ul class="page clearfix">
+      <li class="pageitem">1</li>
+      <li class="pageitem">1</li>
+      <li class="pageitem">1</li>
+      <li class="pageitem">1</li>
+      <li class="pageitem">1</li>
+      
     </ul>
   </div>
 </template>
@@ -97,11 +105,6 @@ export default {
         });
 
     },
-
-
-
-
-
     //判断点击那个页码发送对应的请求，将localData改变成对应的数据
     toNumpage(index){
       this.curentPage = index + 1;
@@ -204,29 +207,25 @@ export default {
 .page{
   /* height: 10px; */
   /* background-color: #999; */
-  position: relative;
-
+  position: absolute;
+  top:700px;
+  left: 45%;
 }
 .page .pageitem{
   font-size: 12px;
   cursor: pointer;
   float: left;
-  background-color: #ea6f5a;
+  background-color: aliceblue;
+  color: #999;
   border-radius: 50%;
   line-height: 20px;
   width: 20px;
   text-align:center;
-  color:bisque;
   margin: 3px;
-  transform: translateX(-50px);
 }
-.page .pageitem:first-child{
-  
-  margin-left: 50%;
-  
-}
+
 .page .curent{
-  background-color: aliceblue;
-  color: #999
+  background-color: #ea6f5a;
+  color:bisque;
 }
 </style>

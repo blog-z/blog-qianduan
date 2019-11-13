@@ -51,6 +51,16 @@ export default {
 
     };
   },
+  computed: {
+    userName() {
+      return this.$store.state.userName;
+      // return "zhangsan"
+    },
+    token(){
+      return this.$store.state.token;
+    }
+  },
+  
   methods: {
     tohomepage() {
       this.$router.replace("/homepage");
@@ -101,15 +111,7 @@ export default {
         });
     }
   },
-  computed: {
-    userName() {
-      return this.$store.state.userName;
-      // return "zhangsan"
-    },
-    accessToken(){
-      return this.$store.state.token;
-    }
-  }
+  
 };
 </script>
 
