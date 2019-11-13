@@ -3,13 +3,17 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const state = {
   userName: '',
-  token: ''
+  token: '',
+  inputText: '',
 }
 const mutations ={
   hasLogin(state,obj){
     state.userName = obj.userName;
     state.token = obj.token;
 
+  },
+  inputChange(state,text){
+    state.inputText = text;
   }
 
 }

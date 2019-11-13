@@ -25,6 +25,16 @@
       </div>
       <div class="underline"></div>
     </div>
+
+    <ul class="page clearfix">
+      <li v-for="(item, index) in totalPage" :key="index"
+       class="pageitem" :class="{curent:curentPage==index+1}"
+       @click="toNumpage(index)">
+        {{index+1}}
+      </li>
+      
+
+    </ul>
   </div>
 </template>
 <script>
@@ -37,7 +47,13 @@ export default {
     return {
       //这里存放请求回来的数据
       localData: [],
-      clickIndex: ""
+      clickIndex: "",
+      //用户输入的文本
+      searchtext:'',
+      // 页码相关的数据
+      totalPage: null,
+      curentPage: null,
+
     };
   },
   computed: {
@@ -46,6 +62,9 @@ export default {
     },
     token() {
       return this.$store.state.token;
+    },
+    searchtext(){
+      return this.$store.state.inputText;
     }
   },
   methods: {
@@ -77,12 +96,50 @@ export default {
           alert("个人中心文章详情页请求失败");
           console.log(err);
         });
+
+    },
+
+
+
+
+
+    //判断点击那个页码发送对应的请求，将localData改变成对应的数据
+    toNumpage(index){
+      this.curentPage = index + 1;
+      let data = {
+        userName:this.userName,
+        userInputText: this.searchtext,
+        pageNum: this.curentPage
+      }
+       ajax({
+        url: "/upload/searchArticle",
+        method: "post",
+        data: qs.stringify(data),
+        //搜索发表的文章要发token
+        headers: { accessToken: this.token }
+      })
+        .then(res => {
+          if (res.status == 0) {
+            //搜索成功，将数据保存到本地
+            this.localData = res.data.list;
+          }
+        })
+        .catch(err => {
+          alert("搜索失败");
+          // console.log(err);
+        });
+
+
+
     }
+
   },
 
   mounted() {
     // 将首页传过来的数据保存的本地并且渲染一下。
     this.localData = this.$route.query.list;
+    this.totalPage = this.$route.query.totalPage;
+    this.curentPage = this.$route.query.pageNum;
   }
 };
 </script>
@@ -143,5 +200,33 @@ export default {
   float: right;
   margin-right: 20px;
   margin-top: 10px;
+}
+.page{
+  /* height: 10px; */
+  /* background-color: #999; */
+  position: relative;
+
+}
+.page .pageitem{
+  font-size: 12px;
+  cursor: pointer;
+  float: left;
+  background-color: #ea6f5a;
+  border-radius: 50%;
+  line-height: 20px;
+  width: 20px;
+  text-align:center;
+  color:bisque;
+  margin: 3px;
+  transform: translateX(-50px);
+}
+.page .pageitem:first-child{
+  
+  margin-left: 50%;
+  
+}
+.page .curent{
+  background-color: aliceblue;
+  color: #999
 }
 </style>
