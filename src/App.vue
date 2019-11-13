@@ -74,7 +74,7 @@ export default {
         pageNum: this.pageNum
       }
        ajax({
-        url: "/upload/deleteArticle",
+        url: "/upload/searchArticle",
         method: "post",
         data: qs.stringify(data),
         //删除自己发表的文章要发token

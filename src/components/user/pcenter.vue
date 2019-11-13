@@ -104,7 +104,7 @@ export default {
       //获取文章的id，发送请求，重修定位到这个路由
       let articleId = this.localData[index].article_id;
       let data = {
-        articleId,
+        articleId: articleId,
         userName: this.userName
       };
       ajax({
@@ -117,11 +117,14 @@ export default {
         .then(res => {
           if (res.status == 0) {
             //删除成功，刷新页面
-            this.localData.splice(index,1,'');
+            this.localData.splice(index,1);
             //删除服务器的数据，同时删除本地数据
             this.$message('删除成功')
+            //删除整个遍历的div元素
 
-            this.$router.replace('/pcenter')
+
+
+            // this.$router.replace('/pcenter')
           }
         })
         .catch(err => {
