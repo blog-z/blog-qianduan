@@ -26,7 +26,7 @@
       <div class="underline"></div>
     </div>
 
-    <!-- <ul class="page clearfix">
+    <ul class="page clearfix">
       <li v-for="(item, index) in totalPage" :key="index"
        class="pageitem" :class="{curent:curentPage==index+1}"
        @click="toNumpage(index)">
@@ -34,15 +34,8 @@
       </li>
       
 
-    </ul> -->
-    <ul class="page clearfix">
-      <li class="pageitem">1</li>
-      <li class="pageitem">1</li>
-      <li class="pageitem">1</li>
-      <li class="pageitem">1</li>
-      <li class="pageitem">1</li>
-      
     </ul>
+    
   </div>
 </template>
 <script>
