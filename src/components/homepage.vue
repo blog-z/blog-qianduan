@@ -22,6 +22,8 @@
       </div>
       <div class="underline"></div>
     </div>
+    <p class="load-more" @click="loadmore" v-if="!loadOver">加载更多</p>
+    <p class="load-over" v-else>已加载全部</p>
   </div>
 </template>
 <script>
@@ -29,7 +31,7 @@
 import { ajax } from "../network/request";
 import qs from "qs";
 export default {
-  name:'homepage',
+  name: "homepage",
   data() {
     return {
       //请求第一页的数据
@@ -37,7 +39,9 @@ export default {
       //这里存放请求回来的数据
       localData: [],
       //存放点击的index
-      clickIndex: 0
+      clickIndex: 0,
+      totalPage: null,
+      loadOver: false
     };
   },
   computed: {
@@ -49,6 +53,36 @@ export default {
     }
   },
   methods: {
+    //点击加载更多
+    loadmore() {
+      this.pageNum++;
+      if (this.pageNum > this.totalPage) {
+        //服务器的数据请求完毕
+        this.loadOver = true;
+        return;
+      }
+      let data = {
+        pageNum: this.pageNum
+      };
+      //console.log("首页创建了")
+      ajax({
+        url: "/upload/homeArticle",
+        method: "post",
+        data: qs.stringify(data),
+        //token
+        headers: { token: this.token }
+      })
+        .then(res => {
+          if (res.status == 0) {
+            //将请求的数据保存到本地
+            this.localData.push(...res.data.list);
+          }
+        })
+        .catch(err => {
+          this.$message("加载更多失败");
+          console.log(err);
+        });
+    },
     //判断点击的那一篇文章，先获取index通过localdata的index找到这篇文章
     getArticle(index) {
       this.clickIndex = index;
@@ -69,14 +103,13 @@ export default {
             //获取请求的数据，将数据传给子组件articleDetail
             let query = res.data.result;
             this.$router.push({
-              path:'/articledetail',
-              query:query
-            })
-
+              path: "/articledetail",
+              query: query
+            });
           }
         })
         .catch(err => {
-          alert("详情页请求失败");
+          this.$message("详情页请求失败");
           console.log(err);
         });
     }
@@ -85,7 +118,7 @@ export default {
     let data = {
       pageNum: this.pageNum
     };
-    console.log("首页创建了")
+    //console.log("首页创建了")
     ajax({
       url: "/upload/homeArticle",
       method: "post",
@@ -97,10 +130,11 @@ export default {
         if (res.status == 0) {
           //将请求的数据保存到本地
           this.localData = res.data.list;
+          this.totalPage = res.data.totalPage;
         }
       })
       .catch(err => {
-        alert("首页数据请求失败");
+        this.$message("首页数据请求失败");
         console.log(err);
       });
   }
@@ -147,5 +181,17 @@ export default {
 }
 .heat-icon i {
   color: #ea6f5a;
+}
+.load-more,
+.load-over {
+  font-size: 12px;
+  color: #999;
+}
+.load-more {
+  cursor: pointer;
+}
+.load-more:hover {
+  text-decoration: underline;
+  color: #252526;
 }
 </style>

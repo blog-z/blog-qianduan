@@ -205,5 +205,6 @@ label {
 }
 .select-psd{
   width: 100%;
+  
 }
 </style>
