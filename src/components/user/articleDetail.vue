@@ -129,7 +129,7 @@ export default {
         commentFarther: 0,
         commentContent: this.commentText,
         userName: this.userName,
-        commentArtcleId: this.articleId
+        commentArticleId: this.articleId
       };
       ajax({
         url: "/comment/insertComment",
