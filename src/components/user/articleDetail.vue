@@ -129,7 +129,7 @@ export default {
         commentFarther: 0,
         commentContent: this.commentText,
         userName: this.userName,
-        conmentArtcleId: this.articleId
+        commentArtcleId: this.articleId
       };
       ajax({
         url: "/comment/insertComment",
@@ -174,6 +174,7 @@ export default {
         //发表成功
         this.commentItem = res.data;
         // 渲染到页面上
+        // TODO:这里开始
       }
     });
   },
@@ -204,6 +205,7 @@ export default {
     });
   }
 };
+
 //取出homepage传进来的数据
 </script>
 <style scoped>
