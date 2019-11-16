@@ -127,12 +127,12 @@ export default {
       //发表评论的按钮，向服务器发送请求
       let data = {
         commentFarther: 0,
-        commintContent: this.commentText,
+        commentContent: this.commentText,
         userName: this.userName,
         conmentArtcleId: this.articleId
       };
       ajax({
-        url: "/upload/insertComment",
+        url: "/comment/insertComment",
         method: "post",
         data: qs.stringify(data),
         //热度加一需不需要发token
@@ -164,7 +164,7 @@ export default {
       userName: this.userName
     };
     ajax({
-      url: "/upload/selectComment",
+      url: "/comment/selectComment",
       method: "post",
       data: qs.stringify(data),
       //发token
