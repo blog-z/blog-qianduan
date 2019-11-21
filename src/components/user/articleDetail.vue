@@ -39,6 +39,7 @@
       <!-- 评论的用户名 -->
       <p>{{item.commentContent}}</p>
       <!-- 评论的内容 -->
+      <!-- 这里是子评论 -->
       <commendchild :datacom='item.commentVoList'></commendchild>
 
 
@@ -51,10 +52,24 @@
           <i class="iconfont icon-gengxinshijian" title="更新时间"></i>
           {{item.updateTime}}
         </span>
-        <span class="reply" @click="reply(index)">0 回复</span>
+        <span class="reply" @click="reply(item.commentVoList[index])">{{item.commentVoList.length}} 回复</span>
+
+        <!-- 点击一下回复，在下面显示一个框，显示用户名，输入框，在点一下回复收回这个框 -->
+        
+        <div class="recomment" v-if="item.commentVoList[index].show">
+          <span class="com-name child-name">{{userName}}</span>
+          <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="childtext" resize='none' class="childtext"></el-input>
+          <!-- 发表的时候需要把父亲的id传过去 -->
+          <el-button class="child-sub" @click='comcom(item.commentId,item.commentArticleId)'>发表</el-button>
+        </div>
+
+
         <div class="underline"></div>
       </div>
     </div>
+
+
+
 
     <div class="commentItem">
       <!-- 评论的内容 -->
@@ -134,6 +149,7 @@ export default {
     articleId() {
       return this.detailData.article_id;
     },
+    
     userName() {
       return this.$store.state.userName;
     },
@@ -168,13 +184,42 @@ export default {
         }
       });
     },
-    // 点击回复按钮，回复对应的评论
-    reply() {
+    // 点击回复按钮，回复框的显示与隐藏
+    reply(data) {
       //设置最大宽度增大
       this.$refs.maxheight.style.maxHeight = "300px";
       //显示,取得index，取出对应的数据，渲染到页面上
       //TODO:这里处理回复的内容
-      alert("sssss");
+      //data[index].show = true;
+      //切换显示与隐藏
+      if(data.show == true){
+        data.show = false;
+      }else if( data.show == false){
+        data.show = true;
+      }
+    },
+    //回复别人的评论
+    comcom(cid,aid){
+      let data = {
+        commentFarther:cid,
+        commentContent:this.childtext,
+        userName:this.userName,
+        commentArticleId:this.articleId
+      };
+      ajax({
+        url: "/comment/insertComment",
+        method: "post",
+        data: qs.stringify(data),
+        //热度加一需不需要发token
+        headers: { accessToken: this.token }
+      }).then(res => {
+        if (res.status == 0) {
+          //发表成功
+          this.$message("评论成功");
+          this.childtext = "";
+        }
+      });
+
     }
   },
   components:{
