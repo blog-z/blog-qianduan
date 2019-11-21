@@ -52,11 +52,11 @@
           <i class="iconfont icon-gengxinshijian" title="更新时间"></i>
           {{item.updateTime}}
         </span>
-        <span class="reply" @click="reply(item.commentVoList[index])">{{item.commentVoList.length}} 回复</span>
+        <span class="reply">{{item.commentVoList.length}} 回复</span>
 
         <!-- 点击一下回复，在下面显示一个框，显示用户名，输入框，在点一下回复收回这个框 -->
         
-        <div class="recomment" v-if="item.commentVoList[index].show">
+        <div class="recomment">
           <span class="com-name child-name">{{userName}}</span>
           <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="childtext" resize='none' class="childtext"></el-input>
           <!-- 发表的时候需要把父亲的id传过去 -->
