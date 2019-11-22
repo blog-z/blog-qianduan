@@ -15,6 +15,7 @@
         <span class="oneline">{{item.articleTitle}}</span> 的博文
       </div>
     </div>
+    
   </div>
 </template>
 <script>
@@ -66,10 +67,10 @@ export default {
       });
     }
   },
-  mounted() {
+  created() {
     //发送请求把个人评论的数据请求回来
     let data = {
-      userName: userName
+      userName: this.userName
     };
     ajax({
       url: "/comment/getOwnComments",
@@ -85,7 +86,7 @@ export default {
       }
     });
   }
-};
+}
 </script>
 <style lang="" scoped>
 .swap {
