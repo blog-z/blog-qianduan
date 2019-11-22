@@ -52,11 +52,12 @@
           <i class="iconfont icon-gengxinshijian" title="更新时间"></i>
           {{item.updateTime}}
         </span>
-        <span class="reply" @click="reply(item.isShow)">{{item.commentVoList.length}} 回复</span>
+        <span class="reply" @click="reply(index)">{{item.commentVoList.length}} 回复</span>
 
         <!-- 点击一下回复，在下面显示一个框，显示用户名，输入框，在点一下回复收回这个框 -->
+        <!-- 点一下回复，修改item中show的值 -->
         
-        <div class="recomment" v-if="item.isShow">
+        <div class="recomment" v-if="item.show">
           <span class="com-name child-name">{{userName}}</span>
           <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="childtext" resize='none' class="childtext"></el-input>
           <!-- 发表的时候需要把父亲的id传过去 -->
@@ -165,7 +166,7 @@ export default {
     textsubmit() {
       //发表评论的按钮，向服务器发送请求
       let data = {
-        commentFarther: 0,
+        commentFarther: 0, 
         commentContent: this.commentText,
         userName: this.userName,
         commentArticleId: this.articleId
@@ -184,17 +185,19 @@ export default {
       });
     },
     // 点击回复按钮，回复框的显示与隐藏
-    reply(data) {
+    reply(index) {
       //设置最大宽度增大
       this.$refs.maxheight.style.maxHeight = "300px";
       //显示,取得index，取出对应的数据，渲染到页面上
       //TODO:这里处理回复的内容
       //data[index].show = true;
       //切换显示与隐藏
-      if(data == true){
-        data = false;
-      }else if( data == false){
-        data = true;
+      //获取commentItem中的值
+      let isShow = this.commentItem[index].show
+      if(isShow == true){
+        this.commentItem[index].show = false;
+      }else if( isShow == false){
+        this.commentItem[index].show = true;
       }
     },
     //回复别人的评论
