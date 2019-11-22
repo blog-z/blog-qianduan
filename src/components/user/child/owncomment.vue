@@ -67,7 +67,7 @@ export default {
       });
     }
   },
-  created() {
+  mounted() {
     //发送请求把个人评论的数据请求回来
     let data = {
       userName: this.userName
