@@ -16,6 +16,8 @@ import writearticle from '../components/user/writeArticle.vue'
 import changearticle from '../components/user/changeArticle.vue'
 //搜索的路由
 import searchArticle from '../components/user/searchArticle'
+//获取自己评论的路由
+import owncomment from '../components/user/child/owncomment'
 
 Vue.use(Router)
 
@@ -70,6 +72,12 @@ export default new Router({
       path: '/searchArticle',
       name: 'searchArticle',
       component: searchArticle
+    },
+    // 自己评论内容的路由
+    {
+      path: '/owncomment',
+      name: 'owncomment',
+      component: owncomment
     },
     
 

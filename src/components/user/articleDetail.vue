@@ -52,7 +52,7 @@
           <i class="iconfont icon-gengxinshijian" title="更新时间"></i>
           {{item.updateTime}}
         </span>
-        <span class="reply">{{item.commentVoList.length}} 回复</span>
+        <span class="reply" @click="reply(item.isShow)">{{item.commentVoList.length}} 回复</span>
 
         <!-- 点击一下回复，在下面显示一个框，显示用户名，输入框，在点一下回复收回这个框 -->
         
@@ -174,7 +174,6 @@ export default {
         url: "/comment/insertComment",
         method: "post",
         data: qs.stringify(data),
-        //热度加一需不需要发token
         headers: { accessToken: this.token }
       }).then(res => {
         if (res.status == 0) {
@@ -192,10 +191,10 @@ export default {
       //TODO:这里处理回复的内容
       //data[index].show = true;
       //切换显示与隐藏
-      if(data.show == true){
-        data.show = false;
-      }else if( data.show == false){
-        data.show = true;
+      if(data == true){
+        data = false;
+      }else if( data == false){
+        data = true;
       }
     },
     //回复别人的评论

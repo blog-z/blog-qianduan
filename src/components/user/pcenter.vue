@@ -29,6 +29,7 @@
     </div>
     <!-- 发表文章的按钮 -->
     <el-button @click="towrite" class="write">发表文章</el-button>
+    <el-button @click="toMycomment" class="write">我的评论</el-button>
   </div>
 </template>
 <script>
@@ -134,6 +135,9 @@ export default {
           alert("删除文章失败");
           console.log(err);
         });
+    },
+    toMycomment(){
+      this.$router.push('/owncomment')
     }
   },
 
