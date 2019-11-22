@@ -18,6 +18,8 @@
   </div>
 </template>
 <script>
+import qs from 'qs';
+import {ajax} from '../../../network/request'
 export default {
   data() {
     return {
