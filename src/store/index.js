@@ -14,6 +14,10 @@ const mutations ={
   },
   inputChange(state,text){
     state.inputText = text;
+  },
+  clearLogin(state){
+    state.userName = obj.userName;
+    state.token = obj.token;
   }
 
 }

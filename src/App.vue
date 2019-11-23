@@ -16,6 +16,7 @@
       <div v-if="userName" class="log-reg-wap">
         <span class="comeback" v-if="this.$route.path == '/pcenter'">{{userName}} 个人中心</span>
         <span @click="topCenter" class="comeback" v-else>欢迎回来: {{userName}}</span>
+        <span class="login-out" @click="loginOut">退出</span>
       </div>
       <div class="log-reg-wap" v-else>
         <div class="regist">
@@ -53,6 +54,7 @@ export default {
   computed: {
     userName() {
       return this.$store.state.userName;
+      // return 'haha'
       // return "zhangsan"
     },
     token() {
@@ -106,6 +108,17 @@ export default {
           alert("搜索失败");
           // console.log(err);
         });
+    },
+    //点击退出登陆
+    loginOut(){
+      //删除vuex中的数据
+      this.$store.commit('clearLogin');
+      //删除localStorage中的数据
+      localStorage.removeItem('nameobj');
+      //跳转路由到登录页面
+      this.$router.replace('/login');
+      
+
     }
   },
   mounted() {
@@ -197,8 +210,17 @@ export default {
   font-size: 12px;
   color: #666c7a;
 }
-.comeback {
-  cursor: pointer;
+.comeback .login-out{
+  /* cursor: pointer; */
   margin-right: 20px;
+}
+.login-out{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.login-out:hover{
+  color:#0000cc;
+  cursor: pointer;
+  
 }
 </style>

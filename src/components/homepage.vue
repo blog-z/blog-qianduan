@@ -187,7 +187,11 @@ export default {
 .load-more,
 .load-over {
   font-size: 12px;
-  color: #999;
+  color: #666;
+  margin-left: 120px;
+  margin-top: 8px;
+
+  
 }
 .load-more {
   cursor: pointer;

@@ -18,7 +18,7 @@ export function ajax(config){
         if (req.method === 'post') {
             Object.keys(req.data).forEach(item => {
                 !isPrimeval(req.data[item]) && (req.data[item] = JSON.stringify(req.data[item]))
-                console.log("进入了请求拦截的代码")
+                // console.log("进入了请求拦截的代码")
             })
             req.data = qs.stringify(req.data)
         }
@@ -30,10 +30,10 @@ export function ajax(config){
     //网上抄的代码
     //做一个响应拦截
     registInstance.interceptors.response.use(res => {
-        console.log("res的数据类型"+typeof res);
-        console.log("res的值为"+res)
+        // console.log("res的数据类型"+typeof res);
+        // console.log("res的值为"+res)
 
         return res.data
-    } ,err =>{console.log("响应拦截出现了问题")})
+    } ,err =>{console.log("响应拦截error")})
     return registInstance(config)
 }

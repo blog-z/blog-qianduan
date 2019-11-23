@@ -201,7 +201,7 @@ export default {
   /* height: 10px; */
   /* background-color: #999; */
   position: absolute;
-  top:700px;
+  top:780px;
   left: 45%;
 }
 .page .pageitem{

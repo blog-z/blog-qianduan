@@ -280,7 +280,7 @@ export default {
 .art-lis {
   margin-left: 120px;
   margin-top: 30px;
-  width: 960px;
+  /* width: 960px; */
   background-color: #f9f9f9;
   padding: 25px 25px;
 }
