@@ -39,9 +39,7 @@
       <!-- 评论的用户名 -->
       <p>{{item.commentContent}}</p>
       <!-- 评论的内容 -->
-      <!-- 这里是子评论 -->
-      <commendchild :datacom="item.commentVoList" v-if="item.show"></commendchild>
-
+      <!-- 评论下的小图标 -->
       <div class="art-icon">
         <span class="creat-time">
           <i class="iconfont icon-dingdanxiangqing-chuangjianshijian" title="发表时间"></i>
@@ -52,26 +50,28 @@
           {{item.updateTime}}
         </span>
         <span class="reply" @click="reply(index)">{{item.commentVoList.length}} 回复</span>
-
         <!-- 点击一下回复，在下面显示一个框，显示用户名，输入框，在点一下回复收回这个框 -->
         <!-- 点一下回复，修改item中show的值 -->
-
-        <div class="recomment" v-if="item.show">
-          <span class="com-name child-name">{{userName}}</span>
-          <el-input
-            type="textarea"
-            :rows="4"
-            placeholder="请输入内容"
-            v-model="childtext"
-            resize="none"
-            class="childtext"
-          ></el-input>
-          <!-- 发表的时候需要把父亲的id传过去 -->
-          <el-button class="child-sub" @click="comcom(item.commentId,item.commentArticleId)">发表</el-button>
-        </div>
-
-        <div class="underline"></div>
       </div>
+      <div class="underline"></div>
+      <!-- 这里是子评论 -->
+      <commendchild :datacom="item.commentVoList" v-if="item.show"></commendchild>
+
+      <div class="recomment" v-if="item.show">
+        <span class="com-name child-name">{{userName}}</span>
+        <el-input
+          type="textarea"
+          :rows="4"
+          placeholder="请输入内容"
+          v-model="childtext"
+          resize="none"
+          class="childtext"
+        ></el-input>
+        <!-- 发表的时候需要把父亲的id传过去 -->
+        <el-button class="child-sub" @click="comcom(item.commentId,item.commentArticleId)">发表</el-button>
+      </div>
+
+      
     </div>
   </div>
 </template>
