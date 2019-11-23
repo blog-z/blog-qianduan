@@ -103,6 +103,9 @@ export default {
               this.$store.commit("hasLogin", res.data);
               // alert("登录成功,token为" + res.data);
               this.$message("欢迎回来" + res.data.userName);
+              //将数据存储到localStorage中
+              let nameobj = JSON.stringify(res.data);//转化为字符串
+              localStorage.setItem('nameobj',nameobj);
 
               //跳转到首页
               this.$router.replace('/homepage');

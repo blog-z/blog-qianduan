@@ -40,8 +40,7 @@
       <p>{{item.commentContent}}</p>
       <!-- 评论的内容 -->
       <!-- 这里是子评论 -->
-      <commendchild :datacom='item.commentVoList'></commendchild>
-
+      <commendchild :datacom="item.commentVoList" v-if="item.show"></commendchild>
 
       <div class="art-icon">
         <span class="creat-time">
@@ -56,66 +55,22 @@
 
         <!-- 点击一下回复，在下面显示一个框，显示用户名，输入框，在点一下回复收回这个框 -->
         <!-- 点一下回复，修改item中show的值 -->
-        
+
         <div class="recomment" v-if="item.show">
           <span class="com-name child-name">{{userName}}</span>
-          <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="childtext" resize='none' class="childtext"></el-input>
+          <el-input
+            type="textarea"
+            :rows="4"
+            placeholder="请输入内容"
+            v-model="childtext"
+            resize="none"
+            class="childtext"
+          ></el-input>
           <!-- 发表的时候需要把父亲的id传过去 -->
-          <el-button class="child-sub" @click='comcom(item.commentId,item.commentArticleId)'>发表</el-button>
-        </div>
-
-
-        <div class="underline"></div>
-      </div>
-    </div>
-
-
-
-
-    <div class="commentItem">
-      <!-- 评论的内容 -->
-      <h4 class="com-name">用户名</h4>
-      <p ref="maxheight">
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论
-        的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论
-        的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论
-        的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-        我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论
-        的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈我是评论的内容哈哈哈哈哈
-      </p>
-
-      
-      <!-- :TODO:这里设计的时候要先把index传给子组件中，将子评论添加为评论数组的一个属性，
-      属性名就是index，属性值是子评论数组，在这里遍历 -->
-      <!--  -->
-      
-
-      <div class="art-icon">
-        <span class="creat-time">
-          <i class="iconfont icon-dingdanxiangqing-chuangjianshijian" title="发表时间"></i>
-          2019-11-2
-        </span>
-        <span class="update-time">
-          <i class="iconfont icon-gengxinshijian" title="更新时间"></i>
-          2020-11-3
-        </span>
-        <span class="reply">0 回复</span>
-        <!-- 点击一下回复，在下面显示一个框，显示用户名，输入框，在点一下回复收回这个框 -->
-        
-        <div class="recomment">
-          <span class="com-name child-name">用户名</span>
-          <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="childtext" resize='none' class="childtext"></el-input>
-          <el-button class="child-sub">发表</el-button>
+          <el-button class="child-sub" @click="comcom(item.commentId,item.commentArticleId)">发表</el-button>
         </div>
 
         <div class="underline"></div>
-        <br />
       </div>
     </div>
   </div>
@@ -123,7 +78,7 @@
 <script>
 import qs from "qs";
 import { ajax } from "../../network/request";
-import commendchild from './child/commend'
+import commendchild from "./child/commend";
 export default {
   name: "detailData",
   data() {
@@ -137,8 +92,7 @@ export default {
 
       //初始化每条评论的数据，保存服务器请求回来的数据
       commentItem: [],
-      childtext:'',
-
+      childtext: ""
     };
   },
   computed: {
@@ -150,7 +104,7 @@ export default {
     articleId() {
       return this.detailData.article_id;
     },
-    
+
     userName() {
       return this.$store.state.userName;
     },
@@ -166,7 +120,7 @@ export default {
     textsubmit() {
       //发表评论的按钮，向服务器发送请求
       let data = {
-        commentFarther: 0, 
+        commentFarther: 0,
         commentContent: this.commentText,
         userName: this.userName,
         commentArticleId: this.articleId
@@ -181,6 +135,28 @@ export default {
           //发表成功
           this.$message("评论成功");
           this.commentText = "";
+
+          //服务器的数据发生了更新，再次向服务器发送请求
+          let data = {
+            articleId: this.articleId,
+            userName: this.userName
+          };
+          ajax({
+            url: "/comment/selectComment",
+            method: "post",
+            data: qs.stringify(data),
+            //发token
+            headers: { accessToken: this.token }
+          }).then(res => {
+            if (res.status == 0) {
+              //发表成功
+              this.commentItem = res.data;
+              // 渲染到页面上
+            }
+          });
+        } else if (res.status == 1) {
+          this.$message("请先登录");
+          return;
         }
       });
     },
@@ -193,20 +169,20 @@ export default {
       //data[index].show = true;
       //切换显示与隐藏
       //获取commentItem中的值
-      let isShow = this.commentItem[index].show
-      if(isShow == true){
+      let isShow = this.commentItem[index].show;
+      if (isShow == true) {
         this.commentItem[index].show = false;
-      }else if( isShow == false){
+      } else if (isShow == false) {
         this.commentItem[index].show = true;
       }
     },
     //回复别人的评论
-    comcom(cid,aid){
+    comcom(cid, aid) {
       let data = {
-        commentFarther:cid,
-        commentContent:this.childtext,
-        userName:this.userName,
-        commentArticleId:this.articleId
+        commentFarther: cid,
+        commentContent: this.childtext,
+        userName: this.userName,
+        commentArticleId: this.articleId
       };
       ajax({
         url: "/comment/insertComment",
@@ -218,13 +194,32 @@ export default {
         if (res.status == 0) {
           //发表成功
           this.$message("评论成功");
-          this.childtext = "";
+          //发表成功后在发送一次请求把回复后的数据请求回来
+          let data = {
+            articleId: this.articleId,
+            userName: this.userName
+          };
+          ajax({
+            url: "/comment/selectComment",
+            method: "post",
+            data: qs.stringify(data),
+            //发token
+            headers: { accessToken: this.token }
+          }).then(res => {
+            if (res.status == 0) {
+              //发表成功
+              this.commentItem = res.data;
+              // 渲染到页面上
+            }
+          });
+        } else if (res.status == 1) {
+          this.$message("请先登录");
+          return;
         }
       });
-
     }
   },
-  components:{
+  components: {
     commendchild
   },
   created() {
@@ -363,22 +358,20 @@ export default {
   margin-left: 50px;
   margin-top: 5px;
   position: relative;
-
 }
-.childtext{
+.childtext {
   width: 600px;
   margin-left: 150px;
   margin-top: 30px;
 }
-.child-name{
-  position:absolute;
+.child-name {
+  position: absolute;
   top: 30px;
   left: 30px;
 }
-.child-sub{
+.child-sub {
   float: right;
   margin-top: 5px;
   margin-right: 30px;
 }
-
 </style>
