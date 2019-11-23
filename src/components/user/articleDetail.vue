@@ -163,7 +163,7 @@ export default {
     // 点击回复按钮，回复框的显示与隐藏
     reply(index) {
       //设置最大宽度增大
-      this.$refs.maxheight.style.maxHeight = "300px";
+      // this.$refs.maxheight.style.maxHeight = "300px";
       //显示,取得index，取出对应的数据，渲染到页面上
       //TODO:这里处理回复的内容
       //data[index].show = true;
@@ -280,7 +280,7 @@ export default {
 .art-lis {
   margin-left: 120px;
   margin-top: 30px;
-  width: 730px;
+  width: 960px;
   background-color: #f9f9f9;
   padding: 25px 25px;
 }

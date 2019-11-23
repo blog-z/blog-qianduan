@@ -137,14 +137,7 @@ export default {
         this.$message("首页数据请求失败");
         console.log(err);
       });
-      //先读取localStorage中是否有数据，如果有，就调用vuex中的方法，把数据保存到vuex中
-      let nameobj = localStorage.getItem("nameobj");
-      if(nameobj){
-
-        let nameZ = JSON.parse(nameobj);
-        this.$store.commit("hasLogin", nameZ);
-        this.$message('欢迎回来'+nameZ.userName)
-      }
+      
       
   }
 };

@@ -37,8 +37,8 @@
 
 <script>
 //准备发送请求
-import {ajax} from './network/request'
-import qs from 'qs'
+import { ajax } from "./network/request";
+import qs from "qs";
 
 export default {
   name: "App",
@@ -48,7 +48,6 @@ export default {
       searchtext: "",
       //初始化pageNum
       pageNum: 1
-
     };
   },
   computed: {
@@ -56,11 +55,11 @@ export default {
       return this.$store.state.userName;
       // return "zhangsan"
     },
-    token(){
+    token() {
       return this.$store.state.token;
     }
   },
-  
+
   methods: {
     tohomepage() {
       this.$router.replace("/homepage");
@@ -76,18 +75,18 @@ export default {
     //点击搜索
     tosearch() {
       //将搜索文本添加到vuex中
-      this.$store.commit('inputChange',this.searchtext)
+      this.$store.commit("inputChange", this.searchtext);
       //发送请求，得到数据将数据传给搜索页面，搜索页面可以点击
       //初始化data，准备发送搜索的ajax。
       //先跳转到首页，在跳转到搜索页面
-      this.$router.replace('/homepage')
-      
+      this.$router.replace("/homepage");
+
       let data = {
-        userName:this.userName,
+        userName: this.userName,
         userInputText: this.searchtext,
         pageNum: this.pageNum
-      }
-       ajax({
+      };
+      ajax({
         url: "/upload/searchArticle",
         method: "post",
         data: qs.stringify(data),
@@ -98,11 +97,9 @@ export default {
           if (res.status == 0) {
             //搜索成功，跳转路由到searchArticle，将数据传输给这个路由
             this.$router.replace({
-              path:'searchArticle',
-              query:res.data
-            })
-            
-
+              path: "searchArticle",
+              query: res.data
+            });
           }
         })
         .catch(err => {
@@ -111,7 +108,15 @@ export default {
         });
     }
   },
-  
+  mounted() {
+    //先读取localStorage中是否有数据，如果有，就调用vuex中的方法，把数据保存到vuex中
+    let nameobj = localStorage.getItem("nameobj");
+    if (nameobj) {
+      let nameZ = JSON.parse(nameobj);
+      this.$store.commit("hasLogin", nameZ);
+      this.$message("欢迎回来" + nameZ.userName);
+    }
+  }
 };
 </script>
 
