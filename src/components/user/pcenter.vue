@@ -28,7 +28,7 @@
       <div class="underline"></div>
     </div>
     <!-- 发表文章的按钮 -->
-    <el-button @click="towrite" class="write">发表文章</el-button>
+    
     <el-button @click="toMycomment" class="write">我的评论</el-button>
   </div>
 </template>
@@ -57,9 +57,7 @@ export default {
     }
   },
   methods: {
-    towrite() {
-      this.$router.replace("/writearticle");
-    },
+    
     //判断点击的那一篇文章，先获取index通过localdata的index找到这篇文章
     getArticle(index) {
       this.clickIndex = index;

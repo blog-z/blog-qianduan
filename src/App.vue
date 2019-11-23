@@ -6,7 +6,8 @@
       <h2 class="title">青春博客</h2>
       <!-- <router-link to="/homepage" tag="h4">首页</router-link> -->
       <h4 class="title" id="index" @click="tohomepage">首页</h4>
-      <h4 class="title" id="cover" @click="tocover">发现</h4>
+      <h4 class="title" id="cover" @click="towrite">发表文章</h4>
+      <!-- <el-button @click="towrite" class="write">发表文章</el-button> -->
 
       <input type="text" class="search" v-model="searchtext" />
       <a href="javascript:;" class="searchbtn" @click="tosearch">
@@ -15,8 +16,17 @@
 
       <div v-if="userName" class="log-reg-wap">
         <span class="comeback" v-if="this.$route.path == '/pcenter'">{{userName}} 个人中心</span>
-        <span @click="topCenter" class="comeback" v-else>欢迎回来: {{userName}}</span>
-        <span class="login-out" @click="loginOut">退出</span>
+        <span class="comeback" @mouseover="menuShow = true" v-else>欢迎回来: {{userName}}</span>
+        <!-- 退出登录   @click="topCenter"  个人中心-->
+        <!-- <span class="login-out" @click="loginOut">退出</span> -->
+        <!-- 这里在写一个div用于包裹用户中心  以及退出登录 -->
+        <div class="showpag"  @mouseout="menuShow = false"></div>
+          <ul class="menu" @mouseover="menuShow = true" v-show="menuShow">
+          <li class="pcenter" @click="topCenter">用户中心</li>
+          <li class="plogout" @click="loginOut">退出登录</li>
+        </ul>
+        
+        
       </div>
       <div class="log-reg-wap" v-else>
         <div class="regist">
@@ -48,7 +58,8 @@ export default {
       //用户输入搜索的文本
       searchtext: "",
       //初始化pageNum
-      pageNum: 1
+      pageNum: 1,
+      menuShow: false,
     };
   },
   computed: {
@@ -63,6 +74,7 @@ export default {
   },
 
   methods: {
+
     tohomepage() {
       this.$router.replace("/homepage");
     },
@@ -73,6 +85,7 @@ export default {
     topCenter() {
       // console.log(this.$route.path);
       this.$router.replace("/pcenter");
+      this.menuShow = false;
     },
     //点击搜索
     tosearch() {
@@ -109,6 +122,14 @@ export default {
           // console.log(err);
         });
     },
+    //点击发表文章
+    towrite() {
+      if(!this.userName){
+        this.$message('请先登录')
+        return;
+      }
+      this.$router.replace("/writearticle");
+    },
     //点击退出登陆
     loginOut(){
       //删除vuex中的数据
@@ -117,9 +138,10 @@ export default {
       localStorage.removeItem('nameobj');
       //跳转路由到登录页面
       this.$router.replace('/login');
-      
-
-    }
+      this.menuShow = false;
+    },
+    //鼠标移动到的时候menu显示
+    
   },
   mounted() {
     //先读取localStorage中是否有数据，如果有，就调用vuex中的方法，把数据保存到vuex中
@@ -209,10 +231,43 @@ export default {
   line-height: 40px;
   font-size: 12px;
   color: #666c7a;
+  position: relative;
 }
-.comeback .login-out{
+.showpag{
+  position: absolute;
+  top: 10px;
+  /* z-index: 1; */
+  
+
+  width: 130px;
+  height: 140px;
+  /* background-color: rgba(0, 0, 0, .3) */
+}
+.menu{
+  position:absolute;
+  top: 50px;
+  left: 17px;
+  background-color: rgba(64, 72, 91, .8);
+  color: #d8dade;
+  width: 90px;
+  font-size: 13px;
+  text-align: center;
+  
+}
+.menu > li:hover{
+  background-color: #343b4e;
+  color: #fff;
+  cursor: pointer;
+  transition: all .4s;
+
+}
+.comeback,.login-out{
   /* cursor: pointer; */
   margin-right: 20px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+ 
 }
 .login-out{
   margin-left: 10px;

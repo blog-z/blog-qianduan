@@ -278,7 +278,8 @@ export default {
 </script>
 <style scoped>
 .art-lis {
-  margin-left: 120px;
+  margin-left: 20px;
+  margin-right: 20px;
   margin-top: 30px;
   /* width: 960px; */
   background-color: #f9f9f9;
