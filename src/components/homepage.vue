@@ -124,7 +124,7 @@ export default {
       method: "post",
       data: qs.stringify(data),
       //第一次请求需不需要发token
-      headers: { token: this.token }
+      // headers: { token: this.token }
     })
       .then(res => {
         if (res.status == 0) {

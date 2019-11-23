@@ -204,7 +204,7 @@ export default {
             method: "post",
             data: qs.stringify(data),
             //发token
-            headers: { accessToken: this.token }
+            // headers: { accessToken: this.token }
           }).then(res => {
             if (res.status == 0) {
               //发表成功
@@ -237,7 +237,7 @@ export default {
       method: "post",
       data: qs.stringify(data),
       //发token
-      headers: { accessToken: this.token }
+      // headers: { accessToken: this.token }
     }).then(res => {
       if (res.status == 0) {
         //发表成功
