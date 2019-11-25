@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store/index'
 import { 
-  Button, Select ,Input, Row, Col, Option, Message, FormItem,
+  Button, Select ,Input, Row, Col, Option, Message, FormItem,Form,
 } from 'element-ui';
 Vue.config.productionTip = false
 Vue.component(Button.name, Button);
@@ -17,6 +17,7 @@ Vue.component(Option.name, Option);
 Vue.component(Message.name, Message);
 // Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
+Vue.component(Form.name, Form);
 /* eslint-disable no-new */
 Vue.prototype.$message = Message;
 new Vue({
