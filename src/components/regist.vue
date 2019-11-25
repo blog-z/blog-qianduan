@@ -25,7 +25,7 @@
 
       <!-- 邮箱 -->
       <el-form-item label="邮箱" prop="userEmail">
-        <el-input type="email" v-model="ruleForm.userEmail"></el-input>
+        <el-input type="email"  ref="onfocusem" @blur="checkHasem" v-model="ruleForm.userEmail"></el-input>
       </el-form-item>
       <!-- 手机号 -->
       <el-form-item label="手机号" prop="userPhone">
@@ -384,6 +384,30 @@ export default {
           this.$message("用户名已被占用");
           // this.$router.replace('/login');
           this.$refs.onfocus.$el.getElementsByTagName("input")[0].focus();
+        }
+        // console.log(res);
+      });
+    },
+    //检查邮箱是否被注册
+    checkHasem() {
+      // console.log(this.$refs.onfocus.$el.getElementsByTagName('input')[0])
+
+      //发送请求
+      // console.log('离开焦点')
+      let data = {
+        userEmail: this.ruleForm.userEmail
+      };
+      // console.log(JSON.parse(JSON.stringify(data)))
+      ajax({
+        url: "/user/checkRegisterUserEmail",
+        method: "post",
+        data: qs.stringify(data)
+      }).then(res => {
+        if (res.status == 1) {
+          //提示邮箱已被占用
+          this.$message("邮箱已被注册");
+          // this.$router.replace('/login');
+          this.$refs.onfocusem.$el.getElementsByTagName("input")[0].focus();
         }
         // console.log(res);
       });
