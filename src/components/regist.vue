@@ -5,7 +5,14 @@
         <label for="userName">用户名</label>
       </el-col>
       <el-col :span="20">
-        <el-input placeholder="请输入内容" v-model="userName" id="userName" clearable></el-input>
+        <el-input
+          placeholder="请输入内容"
+          v-model="userName"
+          id="userName"
+          ref="onfocus"
+          @blur="checkHas"
+          clearable
+        ></el-input>
       </el-col>
     </el-row>
 
@@ -131,17 +138,41 @@ export default {
         data: qs.stringify(data)
       })
         .then(res => {
-          if(res.status == 0){
+          if (res.status == 0) {
             //提示注册成功并返回到登录页面
             this.$message("注册成功");
-            this.$router.replace('/login');
-
+            this.$router.replace("/login");
           }
-          console.log(res);
+          // console.log(res);
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    //检查用户名是否被注册
+    checkHas() {
+      // console.log(this.$refs.onfocus.$el.getElementsByTagName('input')[0])
+
+      //发送请求
+      // console.log('离开焦点')
+      let data = {
+        userName: this.userName
+      };
+      // console.log(JSON.parse(JSON.stringify(data)))
+
+      ajax({
+        url: "/user/checkRegisterUserName",
+        method: "post",
+        data: qs.stringify(data)
+      }).then(res => {
+        if (res.status == 1) {
+          //提示注册成功并返回到登录页面
+          this.$message("用户名已被占用");
+          // this.$router.replace('/login');
+          this.$refs.onfocus.$el.getElementsByTagName("input")[0].focus();
+        }
+        // console.log(res);
+      });
     }
   },
   computed: {
@@ -169,7 +200,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.registc{
+.registc {
   font-size: 14px;
   width: 400px;
   margin: 150px auto;
@@ -198,13 +229,12 @@ label {
 .el-row {
   margin: 10px 0;
 }
-.regist-btn{
+.regist-btn {
   margin-top: 20px;
   margin-left: 130px;
   width: 180px;
 }
-.select-psd{
+.select-psd {
   width: 100%;
-  
 }
 </style>
