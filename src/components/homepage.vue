@@ -186,18 +186,31 @@ export default {
 }
 .load-more,
 .load-over {
-  font-size: 12px;
-  color: #666;
+  font-size: 14px;
+  color: #e3e4e6;
   margin-left: 120px;
+  margin-right: 120px;
+  height:30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 15px;
+  transition: all .3s;
+
   margin-top: 8px;
+  background-color: #a5a5a5;
 
   
+}
+.load-over{
+  background-color: #bcbcbc;
+  color: #000;
 }
 .load-more {
   cursor: pointer;
 }
 .load-more:hover {
-  text-decoration: underline;
-  color: #252526;
+  /* text-decoration: underline; */
+  background-color: #9b9b9b;
+  color: #fff;
 }
 </style>
